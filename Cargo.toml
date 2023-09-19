@@ -2,6 +2,10 @@
 name = "ntlmclient"
 version = "0.1.0"
 edition = "2021"
+license = "CC0-1.0"
+description = "Simple NTLM client library for Rust."
+repository = "https://github.com/RavuAlHemio/ntlmclient"
+keywords = ["ntlm"]
 
 [dependencies]
 bitflags = { version = "2.4" }
