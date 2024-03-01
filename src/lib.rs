@@ -34,6 +34,9 @@
 //!     let challenge_header = resp.headers().get("www-authenticate")
 //!         .expect("response missing challenge header");
 //!
+//!     // we might have been redirected to a specialized authentication URL
+//!     let auth_url = resp.url();
+//!
 //!     let challenge_b64 = challenge_header.to_str()
 //!         .expect("challenge header not a string")
 //!         .split(" ")
@@ -78,7 +81,7 @@
 //!         .expect("failed to encode NTLM authentication message");
 //!     let auth_b64 = BASE64_STANDARD.encode(&auth_msg_bytes);
 //!
-//!     client.get(EWS_URL)
+//!     client.get(auth_url.clone())
 //!         .header("Authorization", format!("NTLM {}", auth_b64))
 //!         .send().await
 //!         .expect("failed to send authentication request to Exchange")
