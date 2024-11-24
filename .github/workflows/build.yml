@@ -55,7 +55,7 @@ jobs:
       - name: install rustup
         run: "curl --proto '=https' -sSf https://sh.rustup.rs | sh -s -- -y"
       - name: install Rust
-        run: rustup install ${{ matrix.rust_version }}
+        run: '. $HOME/.cargo/env && rustup install ${{ matrix.rust_version }}'
       - name: check out repository code
         uses: actions/checkout@v4
       - name: run debug build
