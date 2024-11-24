@@ -54,7 +54,7 @@ jobs:
       - name: update packages
         run: apt-get -y dist-upgrade
       - name: install packages
-        run: apt-get -y install curl build-essential git
+        run: apt-get -y install curl build-essential pkg-config git libssl-dev
       - name: install rustup
         run: "curl --proto '=https' -sSf https://sh.rustup.rs | sh -s -- -y"
       - name: install Rust
