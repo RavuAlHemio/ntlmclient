@@ -5,7 +5,10 @@ jobs:
     strategy:
       matrix:
         build_mode: ["debug", "release"]
-        rust_version: ["stable", "1.63.0"]
+        rust_version: ["stable", "1.63.0", "1.71.1"]
+        # stable: current version (build & test)
+        # 1.63.0: MSRV for library (build; tests not possible)
+        # 1.71.1: MSRV for tests (build & test)
     runs-on: ubuntu-latest
     container: archlinux:base-devel
     env:
@@ -27,16 +30,16 @@ jobs:
         if: matrix.build_mode == 'release'
       - name: run debug tests
         run: cargo test --features=${{ matrix.features }}
-        if: matrix.build_mode == 'debug'
+        if: matrix.build_mode == 'debug' && matrix.rust_version != '1.63.0'
       - name: run release tests
         run: cargo test --features=${{ matrix.features }} --release
-        if: matrix.build_mode == 'release'
+        if: matrix.build_mode == 'release' && matrix.rust_version != '1.63.0'
   build-ubuntu:
     strategy:
       matrix:
         build_mode: ["debug", "release"]
         ubuntu_version: ["focal", "jammy", "noble"]
-        rust_version: ["stable", "1.63.0"]
+        rust_version: ["stable", "1.63.0", "1.71.1"]
     runs-on: ubuntu-latest
     container: ubuntu:${{ matrix.ubuntu_version }}
     env:
@@ -66,10 +69,10 @@ jobs:
         if: matrix.build_mode == 'release'
       - name: run debug tests
         run: '. $HOME/.cargo/env && cargo test --features=${{ matrix.features }}'
-        if: matrix.build_mode == 'debug'
+        if: matrix.build_mode == 'debug' && matrix.rust_version != '1.63.0'
       - name: run release tests
         run: '. $HOME/.cargo/env && cargo test --features=${{ matrix.features }} --release'
-        if: matrix.build_mode == 'release'
+        if: matrix.build_mode == 'release' && matrix.rust_version != '1.63.0'
   build-windows:
     strategy:
       matrix:
