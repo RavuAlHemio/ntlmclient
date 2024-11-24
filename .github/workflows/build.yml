@@ -31,7 +31,7 @@ jobs:
       - name: run release tests
         run: cargo test --features=${{ matrix.features }} --release
         if: matrix.build_mode == 'release'
-  build-ubuntu-noble:
+  build-ubuntu:
     strategy:
       matrix:
         build_mode: ["debug", "release"]
